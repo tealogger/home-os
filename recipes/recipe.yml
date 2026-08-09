@@ -2,15 +2,11 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 # image will be published to ghcr.io/<user>/<name>
 name: home-os
-# description will be included in the image's metadata
 description: This is my personal OS image.
 
-# the base image to build on top of (FROM) and the version tag to use
 base-image: ghcr.io/ublue-os/kinoite-main
-image-version: latest # You can pin to a specific version of Fedora as well
+image-version: latest
 
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
   - type: files
     files:
@@ -18,19 +14,37 @@ modules:
         destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
 
   - type: dnf
-    # repos:
-    #   copr:
-    #     - atim/starship
+    repos:
+      nonfree: rpmfusion
+    group-install:
+      packages:
+        - virtualization
     install:
       packages:
         - nvim
         - kitty
+        - steam
+        - fastfetch
+        - goverlay
+        - btop
+        - fish
+        - util-linux-user
+        - https://github.com/dahui/z13ctl/releases/download/v1.3.1/z13ctl_1.3.1_linux_amd64.rpm
     remove:
       packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
         - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+        - firefox-langpacks
+
+  - type: pacman
+    install:
+      packages:
+        - zed
+
+  - type: kargs
+    arch: x86_64
+    kargs:
+      - amdgpu.dcdebugmask=0x400
+
 
   # - type: default-flatpaks
   #   configurations:
