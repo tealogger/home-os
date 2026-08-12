@@ -15,7 +15,7 @@ modules:
 
   - type: dnf
     repos:
-      nonfree: rpmfusion
+      nonfree: negativo17
     group-install:
       packages:
         - virtualization
