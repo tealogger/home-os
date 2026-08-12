@@ -27,10 +27,16 @@ modules:
         - btop
         - fish
         - https://github.com/dahui/z13ctl/releases/download/v1.3.1/z13ctl_1.3.1_linux_amd64.rpm
+        - steam
     remove:
       packages:
         - firefox
         - firefox-langpacks
+
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
 
   - type: kargs
     arch: x86_64
